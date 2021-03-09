@@ -12,6 +12,10 @@
 #include <asm/kvm_mmu.h>
 #include "vgic.h"
 
+#define VGIC_NR_SHARED_IRQS    96 - VGIC_NR_PRIVATE_IRQS
+DECLARE_BITMAP(actpen_percpu, VGIC_NR_PRIVATE_IRQS);
+DECLARE_BITMAP(actpen_shared, VGIC_NR_SHARED_IRQS);
+
 /*
  * Initialization rules: there are multiple stages to the vgic
  * initialization, both for the distributor and the CPU interfaces.  The basic
@@ -123,6 +127,14 @@ int kvm_vgic_create(struct kvm *kvm, u32 type)
 		kvm->arch.vgic.vgic_cpu_base = VGIC_ADDR_UNDEF;
 	else
 		INIT_LIST_HEAD(&kvm->arch.vgic.rd_regions);
+
+	for_each_set_bit(i, actpen_percpu, VGIC_NR_PRIVATE_IRQS) {
+		clear_bit(i, actpen_percpu);
+	}
+
+	for_each_set_bit(i, actpen_shared, VGIC_NR_SHARED_IRQS) {
+		clear_bit(i, actpen_shared);
+	}
 
 out_unlock:
 	for (; vcpu_lock_idx >= 0; vcpu_lock_idx--) {
@@ -493,6 +505,15 @@ void kvm_vgic_init_cpu_hardware(void)
 		kvm_call_hyp(__vgic_v3_init_lrs);
 }
 
+
+int kvm_vgic_emu_hyp_init(void)
+{
+	int ret;
+
+	ret = vgic_emu_v2_probe();
+	kvm_info("vgic interrupt IRQ\n");
+	return 0;
+}
 /**
  * kvm_vgic_hyp_init: populates the kvm_vgic_global_state variable
  * according to the host GIC model. Accordingly calls either

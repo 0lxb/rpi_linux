@@ -1483,7 +1483,7 @@ static int init_subsystems(void)
 	/*
 	 * Init HYP view of VGIC
 	 */
-	err = kvm_vgic_hyp_init();
+	err = kvm_vgic_emu_hyp_init();
 	switch (err) {
 	case 0:
 		vgic_present = true;

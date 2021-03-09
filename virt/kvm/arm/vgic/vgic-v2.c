@@ -356,6 +356,26 @@ out:
 
 DEFINE_STATIC_KEY_FALSE(vgic_v2_cpuif_trap);
 
+int vgic_emu_v2_probe(void)
+{
+	int ret;
+
+	ret = kvm_register_vgic_device(KVM_DEV_TYPE_ARM_VGIC_V2);
+	if (ret) {
+		kvm_err("Cannot register GICv2 KVM device\n");
+		return -1;
+	}
+
+	kvm_vgic_global_state.can_emulate_gicv2 = true;
+	kvm_vgic_global_state.vcpu_base = 0;
+	kvm_vgic_global_state.type = VGIC_V2;
+	kvm_vgic_global_state.max_gic_vcpus = VGIC_V2_MAX_CPUS;
+
+	//kvm_debug("vgic-v2@%llx\n", info->vctrl.start);
+
+	return 0;
+}
+
 /**
  * vgic_v2_probe - probe for a VGICv2 compatible interrupt controller
  * @info:	pointer to the GIC description
