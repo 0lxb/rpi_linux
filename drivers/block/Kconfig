@@ -461,4 +461,10 @@ config BLK_DEV_RSXX
 
 source "drivers/block/rnbd/Kconfig"
 
+config BLK_DEV_SAMPLE
+	tristate "sample block device driver"
+	depends on BLOCK
+	help
+	  This is the sample block driver for study. Say Y or M.
+
 endif # BLK_DEV
