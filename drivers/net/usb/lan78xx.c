@@ -64,6 +64,8 @@
 #define LAN7801_USB_PRODUCT_ID		(0x7801)
 #define LAN78XX_EEPROM_MAGIC		(0x78A5)
 #define LAN78XX_OTP_MAGIC		(0x78F3)
+#define AT29M2AF_USB_VENDOR_ID		(0x07C9)
+#define AT29M2AF_USB_PRODUCT_ID	(0x0012)
 
 #define	MII_READ			1
 #define	MII_WRITE			0
@@ -1683,6 +1685,7 @@ static const struct ethtool_ops lan78xx_ethtool_ops = {
 	.set_link_ksettings = lan78xx_set_link_ksettings,
 	.get_regs_len	= lan78xx_get_regs_len,
 	.get_regs	= lan78xx_get_regs,
+	.get_ts_info    = ethtool_op_get_ts_info,
 };
 
 static void lan78xx_init_mac_address(struct lan78xx_net *dev)
@@ -4197,6 +4200,10 @@ static const struct usb_device_id products[] = {
 	{
 	/* LAN7801 USB Gigabit Ethernet Device */
 	USB_DEVICE(LAN78XX_USB_VENDOR_ID, LAN7801_USB_PRODUCT_ID),
+	},
+	{
+	/* ATM2-AF USB Gigabit Ethernet Device */
+	USB_DEVICE(AT29M2AF_USB_VENDOR_ID, AT29M2AF_USB_PRODUCT_ID),
 	},
 	{},
 };
