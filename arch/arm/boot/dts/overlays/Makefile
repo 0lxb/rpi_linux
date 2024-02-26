@@ -86,6 +86,7 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
 	hifiberry-amp.dtbo \
 	hifiberry-amp100.dtbo \
 	hifiberry-amp3.dtbo \
+	hifiberry-amp4pro.dtbo \
 	hifiberry-dac.dtbo \
 	hifiberry-dacplus.dtbo \
 	hifiberry-dacplusadc.dtbo \
@@ -130,6 +131,8 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
 	imx477.dtbo \
 	imx519.dtbo \
 	imx708.dtbo \
+	interludeaudio-analog.dtbo \
+	interludeaudio-digital.dtbo \
 	iqaudio-codec.dtbo \
 	iqaudio-dac.dtbo \
 	iqaudio-dacplus.dtbo \
@@ -171,7 +174,6 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
 	mipi-dbi-spi.dtbo \
 	mlx90640.dtbo \
 	mmc.dtbo \
-	mpu6050.dtbo \
 	mz61581.dtbo \
 	ov2311.dtbo \
 	ov5647.dtbo \
